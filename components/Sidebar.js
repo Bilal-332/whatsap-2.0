@@ -82,7 +82,17 @@ function Sidebar() {
           <SidebarButton onClick={createChat}>Start a new chat</SidebarButton>
 
           {chatsSnapshot?.docs.map((chat) => (
-            <Chat key={chat.id} id={chat.id} users={chat.data().users} />
+            <Chat
+            key={chat.id}
+            id={chat.id}
+            users={chat.data().users}
+            closeSidebar={() => {
+              if (window.innerWidth < 768) {
+                setIsSidebarOpen(false);
+              }
+            }}
+          />
+          
           ))}
         </SidebarContainer>
       )}

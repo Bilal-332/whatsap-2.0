@@ -7,7 +7,7 @@ import { collection, query, where } from "firebase/firestore"; // Modular Fireba
 import getRecipientEmail from "@/utils/getRecipientEmail";
 import { useRouter } from "next/router"; // Import useRouter from next/router
 
-function Chat({ id, users }) {
+function Chat({ id, users , closeSidebar }) {
   const [user] = useAuthState(auth); // Get the current user from Firebase Auth
   const router = useRouter();
   
@@ -29,6 +29,9 @@ function Chat({ id, users }) {
   const enterChat = () => {
     // Navigate to the chat page with the chat ID
     router.push(`/chat/${id}`);
+    if (closeSidebar) {
+      closeSidebar(); // Close the sidebar if the function is provided
+    }
   };
 
 
