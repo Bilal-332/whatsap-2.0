@@ -95,7 +95,7 @@ function Sidebar() {
       )}
 
       <SidebarContainer isOpen={isSidebarOpen}>
-        <MobileOverlay isOpen={isSidebarOpen} onClick={() => setIsSidebarOpen(false)} />
+      
         <SidebarContent isOpen={isSidebarOpen}>
           <BackArrow>
             <IconButton onClick={() => setIsSidebarOpen(false)}>
@@ -171,28 +171,25 @@ export default Sidebar;
 
 // Styled Components
 const SidebarContainer = styled.div`
-  @media (max-width: 768px) {
-    position: fixed;
-    top: 0;
-    left: ${({ isOpen }) => (isOpen ? "0" : "-100%")};
-    width: 70%;
-    max-width: 270px;
-    height: 100%;
-    background-color: white;
-    z-index: 1100;
-    transition: all 0.3s ease-in-out;
-    box-shadow: ${({ isOpen }) => (isOpen ? "2px 0px 10px rgba(0, 0, 0, 0.3)" : "none")};
-  }
+  position: fixed;
+  top: 0;
+  left: ${({ isOpen }) => (isOpen ? "0" : "-100%")};
+  z-index: 1000;
+  width: 80%;
+  max-width: 300px;
+  height: 100%;
+  background-color: white;
+  transition: all 0.3s ease-in-out;
+
   @media (min-width: 768px) {
     position: relative;
-    flex: 0.45;
-    height: 100vh;
-    border-right: 1px solid whitesmoke;
-    min-width: 300px;
+    left: 0;
+    width: auto;
     max-width: 350px;
-    background-color: white;
+    height: 100vh;
   }
 `;
+
 
 const SidebarContent = styled.div`
   display: flex;
@@ -207,20 +204,20 @@ const SidebarContent = styled.div`
   scrollbar-width: none;
 `;
 
-const MobileOverlay = styled.div`
-  display: ${({ isOpen }) => (isOpen ? "block" : "none")};
-  position: fixed;
-  z-index: 1000;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0,0,0,0.3);
+// const MobileOverlay = styled.div`
+//   display: ${({ isOpen }) => (isOpen ? "block" : "none")};
+//   position: fixed;
+//   z-index: 1000;
+//   top: 0;
+//   left: 0;
+//   width: 100vw;
+//   height: 100vh;
+//   background: rgba(0,0,0,0.3);
 
-  @media (min-width: 768px) {
-    display: none;
-  }
-`;
+//   @media (min-width: 768px) {
+//     display: none;
+//   }
+// `;
 
 const Header = styled.div`
   display: flex;
