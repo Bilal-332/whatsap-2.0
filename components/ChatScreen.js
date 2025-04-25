@@ -69,9 +69,10 @@ function ChatScreen({ chat, messages , chatId }) {
           user={message.user}
           message={message.message}
           photoURL={message.photoURL}
-          timestamp={message.timestamp}
+          timestamp={message.timestamp ? new Date(message.timestamp) : null} // ✅ convert back to Date
         />
       ));
+      
     }
   };
 

@@ -328,9 +328,16 @@ const CloseWrapper = styled.div`
 `;
 
 const StyledAvatar = styled(Avatar)`
-  width: 120px;
-  height: 120px;
-  margin: 20px auto 15px;
+  && {
+    width: 150px;
+    height: 150px;
+    margin: 20px auto 15px;
+  }
+  .MuiAvatar-img {
+    object-fit: cover;
+    width: 150px;
+    height: 150px;
+  }
 `;
 
 const PopupTitle = styled.h2`
