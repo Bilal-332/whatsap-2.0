@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { auth } from "../firebase"; // Import the auth from firebase.js
 import { useAuthState } from "react-firebase-hooks/auth"; // Import the useAuthState hook from react-firebase-hooks
 import { useRouter } from "next/router";
+import { useEffect } from "react"; // Import useEffect for side effects
 import {
   AttachFile,
   MoreVertOutlined,
@@ -18,18 +19,20 @@ import {
   addDoc,
   serverTimestamp,
 } from "firebase/firestore";
+
 import { useCollection } from "react-firebase-hooks/firestore"; // Import useCollection hook
-import { collection, query, orderBy , where} from "firebase/firestore"; // Modular Firebase SDK imports
+import { collection, query, where, getDocs , orderBy} from "firebase/firestore"; // Modular Firebase SDK imports
 import Message from "./Message"; // Import the Message component
 import { db } from "../firebase"; // Import the db from firebase.js
 import getRecipientEmail from "@/utils/getRecipientEmail";
 import TimeAgo from "timeago-react"; // Import TimeAgo for displaying time since last seen
 
-function ChatScreen({ chat, messages }) {
+function ChatScreen({ chat, messages , chatId }) {
   const [user] = useAuthState(auth); // Get the current user from Firebase Auth
   const [input, setInput] = useState(""); // State for the input field
   const endOfMessageRef = useRef(null); // Ref for the end of messages
   const router = useRouter(); // Get the router object from Next.js
+  
 
   const [messagesSnapshot] = useCollection(
     query(
@@ -98,6 +101,7 @@ function ChatScreen({ chat, messages }) {
       message: input,
       user: user.email,
       photoURL: user.photoURL,
+      //seen: false, // Set seen to false when sending a new message
     });
 
     setInput("");
@@ -106,6 +110,21 @@ function ChatScreen({ chat, messages }) {
 
   const recipientEmail = getRecipientEmail(chat.users, user);
   const recipient = recipientSnapshot?.docs?.[0]?.data(); // Get recipient data from Firestore    
+
+  // useEffect(() => {
+  //   const markMessagesAsSeen = async () => {
+  //     const messagesRef = collection(db, "chats", chatId, "messages");
+  //     const unseenMessagesQuery = query(messagesRef, where("seen", "==", false), where("sender", "!=", user.email));
+  //     const querySnapshot = await getDocs(unseenMessagesQuery);
+  
+  //     querySnapshot.forEach((docSnap) => {
+  //       const msgDoc = doc(db, "chats", chatId, "messages", docSnap.id);
+  //       updateDoc(msgDoc, { seen: true });
+  //     });
+  //   };
+  
+  //   markMessagesAsSeen();
+  // }, [chatId, user.email]);
 
   return (
     <Container>
@@ -176,10 +195,16 @@ const HeaderInformation = styled.div`
   flex: 1;
   > h3 {
     margin-bottom: 3px;
+     @media (max-width: 768px) {
+    font-size: 12px;
+  }
   }
   > p {
     font-size: 14px;
     color: gray;
+    @media (max-width: 768px) {
+    font-size: 10px;
+  }
   }
 `;
 const HeaderIcons = styled.div``;
