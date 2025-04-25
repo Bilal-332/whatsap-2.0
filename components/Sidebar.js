@@ -123,6 +123,7 @@ function Sidebar() {
             <SearchInput 
               placeholder="Search in Chats"
               value={searchTerm}
+              onFocus={() => setIsSidebarOpen(true)}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </Search>
